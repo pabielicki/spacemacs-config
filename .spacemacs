@@ -1,4 +1,3 @@
-;; -*- mode: emacs-lisp -*-
 ;; This file is loaded by Spacemacs at startup.
 ;; It must be stored in your home directory.
 
@@ -18,6 +17,35 @@ values."
    ;; of a list then all discovered layers will be installed.
    dotspacemacs-configuration-layers
    '(
+     rust
+     lua
+     html
+     clojure
+     go
+     (elm :variables
+          elm-sort-imports-on-save t
+          elm-format-on-save t
+          elm-format-command "elm-format"
+          elm-compile-arguments '("--output=elm.js")
+          elm-package-json "elm.json"
+          elm-reactor-arguments '("--port" "8000")
+          elm-interactive-command '("elm" "repl")
+          elm-reactor-command '("elm" "reactor")
+          elm-compile-command '("elm" "make")
+          elm-package-command '("elm" "package"))
+     javascript
+     ;; nginx
+     ;; lua
+     vinegar
+     ;; rust
+     ;; csv
+     shell-scripts
+     ;; org-jira
+     ;; c-c++
+     ;; cscope
+     ;; slack
+     ;; windows-scripts
+     ;; javascript
      yaml
      ;; ----------------------------------------------------------------
      ;; Example of useful layers you may want to use right away.
@@ -39,40 +67,47 @@ values."
                       auto-completion-complete-with-key-sequence-delay 0.1
                       auto-completion-private-snippets-directory nil)
 
-     ;; bilus-various
+     bilus-various
      git
-     docker
-     github
+     ;; github
      markdown
-     org
-     shell-scripts
+     (org :variables org-enable-github-support t
+          org-enable-reveal-js-support t)
      (shell :variables
              shell-default-height 30
              shell-default-position 'bottom)
-     spell-checking
+     ;; spell-checking
      syntax-checking
+     ;; slack
+     python
      ;; version-control
-     ruby-on-rails
      (ruby :variables
            ruby-enable-enh-ruby-mode t
            ruby-test-runner 'rspec
            ruby-version-manager 'rvm)
-     clojure
-     html
      restclient
      sql
      themes-megapack
-     elixir
-     plantuml
+     ;; elixir
+     ;; plantuml
      imenu-list
-     floobits
+     ;; rust
+     ;; pandoc
+     ;;vagrant
+     ;; floobits
+     ;; scala
+     gtd
+     ;; ranger
      ;; search-engine
+     ;; selectric
+     docker
      )
    ;; List of additional packages that will be installed without being
    ;; wrapped in a layer. If you need some configuration for these
    ;; packages, then consider creating a layer. You can also put the
-   ;; configuration in `dotspacemacs/user-config'.
-   dotspacemacs-additional-packages '()
+   ;; configuration in `dotspacemacs/nuser-config'.
+   dotspacemacs-additional-packages '(ghub+ magithub ob-go go-add-tags labburn-theme zerodark-theme )
+   ;; dotspacemacs-frozen-packages '(ill-column-indicator) ;; https://github.com/syl20bnr/spacemacs/issues/9701
    ;; A list of packages and/or extensions that will not be install and loaded.
    dotspacemacs-excluded-packages '(evil-unimpaired) ;; Because caused an error.
    ;; If non-nil spacemacs will delete any orphan packages, i.e. packages that
@@ -84,7 +119,8 @@ values."
   "Initialization function.
 This function is called at the very startup of Spacemacs initialization
 before layers configuration.
-You should not put any user code in there besides modifying the variable
+You should not put any user cgit clone https://github.com/et2010/org-gtd.git gtd
+ode in there besides modifying the variable
 values."
   ;; This setq-default sexp is an exhaustive list of all the supported
   ;; spacemacs settings.
@@ -128,29 +164,22 @@ values."
    ;; Press <SPC> T n to cycle to the next theme in the list (works great
    ;; with 2 themes variants, one dark and one light)
    dotspacemacs-themes '(
-                         ;; light-themes
-                            ;; spacemacs-dark
-                            ;; spacemark-light
-                         ;; solarized-light
-                         ;; solarized-dark
-                            ;; leuven
-                            ;; monokai
-                            ;; afternoon
-                            ;; ample-zen
-                            ;; birds-of-paradise-plus
-                         niflheim
-                            spolsky
-                            wombat
+                         labburn
+                         ;; zerodark
+                         ;; lush
+                         ;; spolsky
+                         ;; wombat
                          )
    ;; If non nil the cursor color matches the state color in GUI Emacs.
    dotspacemacs-colorize-cursor-according-to-state t
    ;; Default font. `powerline-scale' allows to quickly tweak the mode-line
    ;; size to make separators look not too crappy.
    dotspacemacs-default-font '("Source Code Pro"
-                               :size 12
+                               :size 10
                                :weight normal
                                :width normal
-                               :powerline-scale 1.1)
+                               :powerline-scale 1.4)
+
    ;; The leader key
    dotspacemacs-leader-key "SPC"
    ;; The leader key accessible in `emacs state' and `insert state'
@@ -177,6 +206,12 @@ values."
    dotspacemacs-command-key ":"
    ;; If non nil `Y' is remapped to `y$'. (default t)
    dotspacemacs-remap-Y-to-y$ t
+   ;; If non-nil, the shift mappings `<' and `>' retain visual state if used
+   ;; there. (default t)
+   dotspacemacs-retain-visual-state-on-shift t
+   ;; If non-nil, J and K move lines up and down when in visual mode.
+   ;; (default nil)
+   dotspacemacs-visual-line-move-text t
    ;; Name of the default layout (default "Default")
    dotspacemacs-default-layout-name "Default"
    ;; If non nil the default layout name is displayed in the mode-line.
@@ -206,7 +241,7 @@ values."
    dotspacemacs-helm-position 'bottom
    ;; If non nil the paste micro-state is enabled. When enabled pressing `p`
    ;; several times cycle between the kill ring content. (default nil)
-   dotspacemacs-enable-paste-micro-state nil
+   dotspacemacs-enable-paste-micro-state t
    ;; Which-key delay in seconds. The which-key buffer is the popup listing
    ;; the commands bound to the current keystroke sequence. (default 0.4)
    dotspacemacs-which-key-delay 0.4
@@ -232,11 +267,11 @@ values."
    ;; A value from the range (0..100), in increasing opacity, which describes
    ;; the transparency level of a frame when it's active or selected.
    ;; Transparency can be toggled through `toggle-transparency'. (default 90)
-   dotspacemacs-active-transparency 90
+   dotspacemacs-active-transparency 100
    ;; A value from the range (0..100), in increasing opacity, which describes
    ;; the transparency level of a frame when it's inactive or deselected.
    ;; Transparency can be toggled through `toggle-transparency'. (default 90)
-   dotspacemacs-inactive-transparency 90
+   dotspacemacs-inactive-transparency 80
    ;; If non nil unicode symbols are displayed in the mode line. (default t)
    dotspacemacs-mode-line-unicode-symbols t
    ;; If non nil smooth scrolling (native-scrolling) is enabled. Smooth
@@ -250,6 +285,10 @@ values."
    ;; If non-nil smartparens-strict-mode will be enabled in programming modes.
    ;; (default nil)
    dotspacemacs-smartparens-strict-mode nil
+   ;; If non-nil pressing the closing parenthesis `)' key in insert mode passes
+   ;; over any automatically added closing parenthesis, bracket, quote, etc…
+   ;; This can be temporary disabled by pressing `C-q' before `)'. (default nil)
+   dotspacemacs-smart-closing-parenthesis t
    ;; Select a scope to highlight delimiters. Possible values are `any',
    ;; `current', `all' or `nil'. Default is `all' (highlight any scope and
    ;; emphasis the current one). (default 'all)
@@ -262,7 +301,7 @@ values."
    ;; (default '("ag" "pt" "ack" "grep"))
    dotspacemacs-search-tools '("ag" "pt" "ack" "grep")
    ;; The default package repository used if no explicit repository has been
-   ;; specified with an installed package.
+   ;; specified with an installed packagee
    ;; Not used for now. (default nil)
    dotspacemacs-default-package-repository nil
    ;; Delete whitespace while saving buffer. Possible values are `all'
@@ -282,15 +321,9 @@ before packages are loaded. If you are unsure, you should try in setting them in
 `dotspacemacs/user-config' first."
   )
 
-(defun dotspacemacs/user-config ()
-  "Configuration function for user code.
-This function is called at the very end of Spacemacs initialization after
-layers configuration.
-This is the place where most of your configurations should be done. Unless it is
-explicitly specified that a variable should be set before a package is loaded,
-you should place you code here."
-  (evil-define-key 'normal evil-jumper-mode-map (kbd "TAB") nil)
-  )
+
+
+
 ;; Do not write anything past this comment. This is where Emacs will
 ;; auto-generate custom variable definitions.
 (custom-set-variables
@@ -298,23 +331,222 @@ you should place you code here."
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
+ '(ansi-color-names-vector
+   ["#242424" "#e5786d" "#95e454" "#cae682" "#8ac6f2" "#333366" "#ccaa8f" "#f6f3e8"])
  '(evil-want-Y-yank-to-eol t)
- '(helm-grep-ignored-files
-   (quote
-    (".#*" "*.o" "*~" "*.bin" "*.lbin" "*.so" "*.a" "*.ln" "*.blg" "*.bbl" "*.elc" "*.lof" "*.glo" "*.idx" "*.lot" "*.fmt" "*.tfm" "*.class" "*.fas" "*.lib" "*.mem" "*.x86f" "*.sparcf" "*.dfsl" "*.pfsl" "*.d64fsl" "*.p64fsl" "*.lx64fsl" "*.lx32fsl" "*.dx64fsl" "*.dx32fsl" "*.fx64fsl" "*.fx32fsl" "*.sx64fsl" "*.sx32fsl" "*.wx64fsl" "*.wx32fsl" "*.fasl" "*.ufsl" "*.fsl" "*.dxl" "*.lo" "*.la" "*.gmo" "*.mo" "*.toc" "*.aux" "*.cp" "*.fn" "*.ky" "*.pg" "*.tp" "*.vr" "*.cps" "*.fns" "*.kys" "*.pgs" "*.tps" "*.vrs" "*.pyc" "*.pyo" "server.log.*")))
- '(org-agenda-files (quote ("~/projects/sprints.org")))
- '(org-trello-current-prefix-keybinding "C-c o")
+ '(linum-format " %7i ")
  '(package-selected-packages
    (quote
-    (dockerfile-mode docker json-mode tablist docker-tramp json-snatcher json-reformat insert-shebang fish-mode company-shell websocket org-trello dash-functional request-deferred deferred flyspell-correct-helm flyspell-correct auto-dictionary projectile-rails plantuml-mode ob-elixir minitest hide-comnt feature-mode zonokai-theme zenburn-theme zen-and-art-theme yaml-mode xterm-color ws-butler window-numbering which-key web-mode volatile-highlights vi-tilde-fringe uuidgen use-package underwater-theme ujelly-theme twilight-theme twilight-bright-theme twilight-anti-bright-theme tronesque-theme toxi-theme toc-org tao-theme tangotango-theme tango-plus-theme tango-2-theme tagedit sunny-day-theme sublime-themes subatomic256-theme subatomic-theme stekene-theme sql-indent spacemacs-theme spaceline powerline spacegray-theme soothe-theme soft-stone-theme soft-morning-theme soft-charcoal-theme smyx-theme smeargle slim-mode shell-pop seti-theme scss-mode sass-mode rvm ruby-tools ruby-test-mode rubocop rspec-mode robe reverse-theme reveal-in-osx-finder restclient restart-emacs rbenv rake rainbow-mode rainbow-identifiers rainbow-delimiters railscasts-theme purple-haze-theme pug-mode professional-theme popwin planet-theme phoenix-dark-pink-theme phoenix-dark-mono-theme persp-mode pcre2el pbcopy pastels-on-dark-theme paradox osx-trash osx-dictionary orgit organic-green-theme org-projectile org-present org org-pomodoro alert log4e gntp org-plus-contrib org-download org-bullets open-junk-file omtose-phellack-theme oldlace-theme occidental-theme obsidian-theme ob-http noctilux-theme niflheim-theme neotree naquadah-theme mwim mustang-theme multi-term move-text monokai-theme monochrome-theme molokai-theme moe-theme mmm-mode minimal-theme material-theme markdown-toc markdown-mode majapahit-theme magit-gitflow magit-gh-pulls macrostep lush-theme lorem-ipsum linum-relative link-hint light-soap-theme less-css-mode launchctl jazz-theme ir-black-theme inkpot-theme info+ indent-guide imenu-list ido-vertical-mode hungry-delete htmlize hl-todo highlight-parentheses highlight-numbers parent-mode highlight-indentation heroku-theme hemisu-theme help-fns+ helm-themes helm-swoop helm-projectile helm-mode-manager helm-make projectile helm-gitignore request helm-flx helm-descbinds helm-css-scss helm-company helm-c-yasnippet helm-ag hc-zenburn-theme haml-mode gruvbox-theme gruber-darker-theme grandshell-theme gotham-theme google-translate golden-ratio gnuplot gitignore-mode github-search github-clone github-browse-file gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link gist gh marshal logito pcache ht gh-md gandalf-theme flycheck-pos-tip pos-tip flycheck-mix flycheck flx-ido flx floobits flatui-theme flatland-theme firebelly-theme fill-column-indicator farmhouse-theme fancy-battery eyebrowse expand-region exec-path-from-shell evil-visualstar evil-visual-mark-mode evil-tutor evil-surround evil-search-highlight-persist evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-magit magit magit-popup git-commit with-editor evil-lisp-state smartparens evil-indent-plus evil-iedit-state iedit evil-exchange evil-escape evil-ediff evil-args evil-anzu anzu evil goto-chg undo-tree espresso-theme eshell-z eshell-prompt-extras esh-help enh-ruby-mode emmet-mode elisp-slime-nav dumb-jump f dracula-theme django-theme diminish darktooth-theme darkokai-theme darkmine-theme darkburn-theme dakrone-theme cyberpunk-theme company-web web-completion-data company-statistics column-enforce-mode colorsarenice-theme color-theme-sanityinc-tomorrow color-theme-sanityinc-solarized color-identifiers-mode clues-theme clojure-snippets clj-refactor hydra inflections edn multiple-cursors paredit s peg clean-aindent-mode cider-eval-sexp-fu eval-sexp-fu highlight cider seq spinner queue clojure-mode chruby cherry-blossom-theme busybee-theme bundler inf-ruby bubbleberry-theme birds-of-paradise-plus-theme bind-map bind-key badwolf-theme auto-yasnippet yasnippet auto-highlight-symbol auto-compile packed apropospriate-theme anti-zenburn-theme ample-zen-theme ample-theme alect-themes alchemist company dash elixir-mode pkg-info epl aggressive-indent afternoon-theme adaptive-wrap ace-window ace-link ace-jump-helm-line helm avy helm-core async ac-ispell auto-complete popup quelpa package-build jbeans-theme)))
- '(projectile-globally-ignored-files (quote ("server.log*" "TAGS" "*.jar" "*.jpg" "*.jpeg" ""))))
+    (toml-mode racer flycheck-rust cargo rust-mode magithub ghub+ apiwrap treepy graphql ox-reveal ox-gfm zerodark-theme all-the-icons memoize labburn-theme flycheck-elm elm-mode lua-mode dockerfile-mode docker tablist docker-tramp haml-mode web-completion-data inflections edn paredit peg cider sesman seq queue clojure-mode org-category-capture alert log4e gntp markdown-mode skewer-mode simple-httpd json-snatcher json-reformat multiple-cursors js2-mode gitignore-mode pos-tip flycheck magit magit-popup git-commit ghub let-alist with-editor autothemer dash-functional tern restclient know-your-http-well go-mode company inf-ruby yasnippet anaconda-mode pythonic auto-complete go evil-unimpaired define-word zenburn-theme zen-and-art-theme yapfify yaml-mode xterm-color ws-butler winum white-sand-theme which-key web-mode web-beautify volatile-highlights vi-tilde-fringe uuidgen use-package unfill underwater-theme ujelly-theme twilight-theme twilight-bright-theme twilight-anti-bright-theme toxi-theme toc-org tao-theme tangotango-theme tango-plus-theme tango-2-theme tagedit sunny-day-theme sublime-themes subatomic256-theme subatomic-theme sql-indent spaceline spacegray-theme soothe-theme solarized-theme soft-stone-theme soft-morning-theme soft-charcoal-theme smyx-theme smeargle slim-mode shell-pop seti-theme scss-mode sass-mode rvm ruby-tools ruby-test-mode rubocop rspec-mode robe reverse-theme reveal-in-osx-finder restclient-helm restart-emacs rebecca-theme rbenv rake rainbow-mode rainbow-identifiers rainbow-delimiters railscasts-theme pyvenv pytest pyenv-mode py-isort purple-haze-theme pug-mode professional-theme popwin planet-theme pip-requirements phoenix-dark-pink-theme phoenix-dark-mono-theme persp-mode pbcopy paradox osx-trash osx-dictionary orgit organic-green-theme org-projectile org-present org-pomodoro org-mime org-download org-bullets open-junk-file omtose-phellack-theme oldlace-theme occidental-theme obsidian-theme ob-restclient ob-http ob-go noctilux-theme neotree naquadah-theme mwim mustang-theme multi-term move-text monokai-theme monochrome-theme molokai-theme moe-theme mmm-mode minitest minimal-theme material-theme markdown-toc majapahit-theme magit-gitflow madhat2r-theme macrostep lush-theme lorem-ipsum livid-mode live-py-mode linum-relative link-hint light-soap-theme less-css-mode launchctl json-mode js2-refactor js-doc jbeans-theme jazz-theme ir-black-theme insert-shebang inkpot-theme indent-guide imenu-list hy-mode hungry-delete htmlize hl-todo highlight-parentheses highlight-numbers highlight-indentation heroku-theme hemisu-theme helm-themes helm-swoop helm-pydoc helm-projectile helm-mode-manager helm-make helm-gitignore helm-flx helm-descbinds helm-css-scss helm-company helm-c-yasnippet helm-ag hc-zenburn-theme gruvbox-theme gruber-darker-theme grandshell-theme gotham-theme google-translate golden-ratio godoctor go-guru go-eldoc go-add-tags gnuplot gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link gh-md gandalf-theme fuzzy flycheck-pos-tip flx-ido flatui-theme flatland-theme fish-mode fill-column-indicator feature-mode farmhouse-theme fancy-battery eyebrowse expand-region exotica-theme exec-path-from-shell evil-visualstar evil-visual-mark-mode evil-tutor evil-surround evil-search-highlight-persist evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-magit evil-lisp-state evil-indent-plus evil-iedit-state evil-exchange evil-escape evil-ediff evil-args evil-anzu espresso-theme eshell-z eshell-prompt-extras esh-help enh-ruby-mode emmet-mode elisp-slime-nav dumb-jump dracula-theme django-theme diminish darktooth-theme darkokai-theme darkmine-theme darkburn-theme dakrone-theme cython-mode cyberpunk-theme company-web company-tern company-statistics company-shell company-restclient company-go company-anaconda column-enforce-mode colorsarenice-theme color-theme-sanityinc-tomorrow color-theme-sanityinc-solarized color-identifiers-mode coffee-mode clues-theme clojure-snippets clj-refactor clean-aindent-mode cider-eval-sexp-fu chruby cherry-blossom-theme busybee-theme bundler bubbleberry-theme boxquote birds-of-paradise-plus-theme bbdb badwolf-theme auto-yasnippet auto-highlight-symbol auto-compile apropospriate-theme anti-zenburn-theme ample-zen-theme ample-theme alect-themes aggressive-indent afternoon-theme adaptive-wrap ace-window ace-link ace-jump-helm-line ac-ispell))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- )
+ '(default ((t (:background nil)))))
 
 (spacemacs/set-leader-keys "SPC" 'avy-goto-char-timer)
 
 (fset 'xterm-color-unfontify-region 'font-lock-default-unfontify-region) ;; https://github.com/syl20bnr/spacemacs/issues/7393
+(setq-default dotspacemacs-configuration-layers
+              '((org :variables org-projectile-file "TODOs.org")))
+
+(defun bilus-open (p)
+  (switch-to-buffer
+   (find-file-noselect p)))
+
+(defun bilus-open-spacemacs-cheatsheet ()
+  (interactive)
+  (bilus-open "~/.emacs.d/private/bilus-various/bilus_spacemacs-pro-tips.pdf"))
+
+(defun bilus-open-ops-cheatsheet ()
+  (interactive)
+  (bilus-open "~/.emacs.d/private/bilus-various/ops-cheatsheet.pdf"))
+
+(spacemacs/set-leader-keys "os" 'bilus-open-spacemacs-cheatsheet)
+(spacemacs/set-leader-keys "oo" 'bilus-open-ops-cheatsheet)
+
+;; So binding.pry can be used in rspecs
+(add-hook 'after-init-hook 'inf-ruby-switch-setup)
+
+(setq jiralib-url "https://nowthis.atlassian.net:443")
+(setq org-jira-working-dir "~/org-jira")
+
+;; Do not kill emacs server https://medium.com/@bobbypriambodo/blazingly-fast-spacemacs-with-persistent-server-92260f2118b7#.xxek79e0v
+(evil-leader/set-key
+  "q q" 'spacemacs/frame-killer)
+
+;; (setq-default cider-cljs-lein-repl "(do (use 'figwheel-sidecar.repl-api) (start-figwheel!) (cljs-repl))")
+(setq-default dotspacemacs-configuration-layers '(gtd))
+;; (setq org-agenda-files (quote ("~/org")))
+(setq org-refile-targets (quote ((nil :maxlevel . 9)
+                                 (org-agenda-files :maxlevel . 2))))
+(setq org-outline-path-complete-in-steps nil)         ; Refile in a single go
+(setq org-refile-use-outline-path 'file)                  ; Show full paths for refiling
+
+;; (setq-default dotspacemacs-configuration-layers
+;;               '((shell :variables shell-default-term-shell "/bin/bash")))
+(defun dotspacemacs/user-config ()
+  (add-hook 'term-mode-hook 'toggle-truncate-lines)
+  ;; ...
+  (setq org-duration-format (quote h:mm))
+  (setq org-time-clocksum-use-fractional t)
+  (setq-default fill-column 130)
+  (add-hook 'go-mode-hook 'fci-mode)
+  (add-hook 'text-mode-hook (lambda () (when (and (string-prefix-p "postmortem-" (buffer-name)) (= (point-max) (point-min))) (insert-file-contents "~/postmortems/postmortem-layout.org"))))
+  (spacemacs/set-leader-keys "<right>" 'spotify-next)
+  (spacemacs/set-leader-keys "<left>" 'spotify-previous)
+  (spacemacs/set-leader-keys "<down>" 'spotify-playpause)
+  ;; Set escape keybinding to "jk"
+  ;; (setq-default evil-escape-key-sequence "jk")
+  (org-babel-do-load-languages 'org-babel-load-languages
+                               '((shell . t)
+                                 (go . t)))
+ (use-package magithub
+   :after magit
+   :config (magithub-feature-autoinject t))
+
+  (setq gofmt-command "goimports")
+  (setq web-mode-engines-alist
+        '(("go" . "\\.tpl\\'") ("go" . "\\.gotpl\\'"))))
+
+(defun dotspacemacs-configuration-layers ()
+  '((ruby :variables ruby-version-manager 'rvm)))
+
+
+
+;;; Fira code
+;; This works when using emacs --daemon + emacsclient
+;; (add-hook 'after-make-frame-functions (lambda (frame) (set-fontset-font t '(#Xe100 . #Xe16f) "Fira Code Retina")))
+;; This works when using emacs without server/client
+;; (set-fontset-font t '(#Xe100 . #Xe16f) "Fira Code Retina")
+;; I haven't found one statement that makes both of the above situations work, so I use both for now
+
+;; (defconst fira-code-font-lock-keywords-alist
+;;   (mapcar (lambda (regex-char-pair)
+;;             `(,(car regex-char-pair)
+;;               (0 (prog1 ()
+;;                    (compose-region (match-beginning 1)
+;;                                    (match-end 1)
+;;                                    ;; The first argument to concat is a string containing a literal tab
+;;                                    ,(concat "  " (list (decode-char 'ucs (cadr regex-char-pair)))))))))
+;;           '(("\\(www\\)"                   #Xe100)
+;;             ("[^/]\\(\\*\\*\\)[^/]"        #Xe101)
+;;             ("\\(\\*\\*\\*\\)"             #Xe102)
+;;             ("\\(\\*\\*/\\)"               #Xe103)
+;;             ("\\(\\*>\\)"                  #Xe104)
+;;             ("[^*]\\(\\*/\\)"              #Xe105)
+;;             ("\\(\\\\\\\\\\)"              #Xe106)
+;;             ("\\(\\\\\\\\\\\\\\)"          #Xe107)
+;;             ("\\({-\\)"                    #Xe108)
+;;             ("\\(\\[\\]\\)"                #Xe109)
+;;             ("\\(::\\)"                    #Xe10a)
+;;             ("\\(:::\\)"                   #Xe10b)
+;;             ("[^=]\\(:=\\)"                #Xe10c)
+;;             ("\\(!!\\)"                    #Xe10d)
+;;             ("\\(!=\\)"                    #Xe10e)
+;;             ("\\(!==\\)"                   #Xe10f)
+;;             ("\\(-}\\)"                    #Xe110)
+;;             ("\\(--\\)"                    #Xe111)
+;;             ("\\(---\\)"                   #Xe112)
+;;             ("\\(-->\\)"                   #Xe113)
+;;             ("[^-]\\(->\\)"                #Xe114)
+;;             ("\\(->>\\)"                   #Xe115)
+;;             ("\\(-<\\)"                    #Xe116)
+;;             ("\\(-<<\\)"                   #Xe117)
+;;             ("\\(-~\\)"                    #Xe118)
+;;             ("\\(#{\\)"                    #Xe119)
+;;             ("\\(#\\[\\)"                  #Xe11a)
+;;             ("\\(##\\)"                    #Xe11b)
+;;             ("\\(###\\)"                   #Xe11c)
+;;             ("\\(####\\)"                  #Xe11d)
+;;             ("\\(#(\\)"                    #Xe11e)
+;;             ("\\(#\\?\\)"                  #Xe11f)
+;;             ("\\(#_\\)"                    #Xe120)
+;;             ("\\(#_(\\)"                   #Xe121)
+;;             ("\\(\\.-\\)"                  #Xe122)
+;;             ("\\(\\.=\\)"                  #Xe123)
+;;             ("\\(\\.\\.\\)"                #Xe124)
+;;             ("\\(\\.\\.<\\)"               #Xe125)
+;;             ("\\(\\.\\.\\.\\)"             #Xe126)
+;;             ("\\(\\?=\\)"                  #Xe127)
+;;             ("\\(\\?\\?\\)"                #Xe128)
+;;             ("\\(;;\\)"                    #Xe129)
+;;             ("\\(/\\*\\)"                  #Xe12a)
+;;             ("\\(/\\*\\*\\)"               #Xe12b)
+;;             ("\\(/=\\)"                    #Xe12c)
+;;             ("\\(/==\\)"                   #Xe12d)
+;;             ("\\(/>\\)"                    #Xe12e)
+;;             ("\\(//\\)"                    #Xe12f)
+;;             ("\\(///\\)"                   #Xe130)
+;;             ("\\(&&\\)"                    #Xe131)
+;;             ("\\(||\\)"                    #Xe132)
+;;             ("\\(||=\\)"                   #Xe133)
+;;             ("[^|]\\(|=\\)"                #Xe134)
+;;             ("\\(|>\\)"                    #Xe135)
+;;             ("\\(\\^=\\)"                  #Xe136)
+;;             ("\\(\\$>\\)"                  #Xe137)
+;;             ("\\(\\+\\+\\)"                #Xe138)
+;;             ("\\(\\+\\+\\+\\)"             #Xe139)
+;;             ("\\(\\+>\\)"                  #Xe13a)
+;;             ("\\(=:=\\)"                   #Xe13b)
+;;             ("[^!/]\\(==\\)[^>]"           #Xe13c)
+;;             ("\\(===\\)"                   #Xe13d)
+;;             ("\\(==>\\)"                   #Xe13e)
+;;             ("[^=]\\(=>\\)"                #Xe13f)
+;;             ("\\(=>>\\)"                   #Xe140)
+;;             ("\\(<=\\)"                    #Xe141)
+;;             ("\\(=<<\\)"                   #Xe142)
+;;             ("\\(=/=\\)"                   #Xe143)
+;;             ("\\(>-\\)"                    #Xe144)
+;;             ("\\(>=\\)"                    #Xe145)
+;;             ("\\(>=>\\)"                   #Xe146)
+;;             ("[^-=]\\(>>\\)"               #Xe147)
+;;             ("\\(>>-\\)"                   #Xe148)
+;;             ("\\(>>=\\)"                   #Xe149)
+;;             ("\\(>>>\\)"                   #Xe14a)
+;;             ("\\(<\\*\\)"                  #Xe14b)
+;;             ("\\(<\\*>\\)"                 #Xe14c)
+;;             ("\\(<|\\)"                    #Xe14d)
+;;             ("\\(<|>\\)"                   #Xe14e)
+;;             ("\\(<\\$\\)"                  #Xe14f)
+;;             ("\\(<\\$>\\)"                 #Xe150)
+;;             ("\\(<!--\\)"                  #Xe151)
+;;             ("\\(<-\\)"                    #Xe152)
+;;             ("\\(<--\\)"                   #Xe153)
+;;             ("\\(<->\\)"                   #Xe154)
+;;             ("\\(<\\+\\)"                  #Xe155)
+;;             ("\\(<\\+>\\)"                 #Xe156)
+;;             ("\\(<=\\)"                    #Xe157)
+;;             ("\\(<==\\)"                   #Xe158)
+;;             ("\\(<=>\\)"                   #Xe159)
+;;             ("\\(<=<\\)"                   #Xe15a)
+;;             ("\\(<>\\)"                    #Xe15b)
+;;             ("[^-=]\\(<<\\)"               #Xe15c)
+;;             ("\\(<<-\\)"                   #Xe15d)
+;;             ("\\(<<=\\)"                   #Xe15e)
+;;             ("\\(<<<\\)"                   #Xe15f)
+;;             ("\\(<~\\)"                    #Xe160)
+;;             ("\\(<~~\\)"                   #Xe161)
+;;             ("\\(</\\)"                    #Xe162)
+;;             ("\\(</>\\)"                   #Xe163)
+;;             ("\\(~@\\)"                    #Xe164)
+;;             ("\\(~-\\)"                    #Xe165)
+;;             ("\\(~=\\)"                    #Xe166)
+;;             ("\\(~>\\)"                    #Xe167)
+;;             ("[^<]\\(~~\\)"                #Xe168)
+;;             ("\\(~~>\\)"                   #Xe169)
+;;             ("\\(%%\\)"                    #Xe16a)
+;;            ;; ("\\(x\\)"                   #Xe16b) This ended up being hard to do properly so i'm leaving it out.
+;;             ("[^:=]\\(:\\)[^:=]"           #Xe16c)
+;;             ("[^\\+<>]\\(\\+\\)[^\\+<>]"   #Xe16d)
+;;             ("[^\\*/<>]\\(\\*\\)[^\\*/<>]" #Xe16f))))
+
+;; (defun add-fira-code-symbol-keywords ()
+;;   (font-lock-add-keywords nil fira-code-font-lock-keywords-alist))
+
+;; (add-hook 'prog-mode-hook
+;;           #'add-fira-code-symbol-keywords)
+
+(defun dotspacemacs-configuration-layers ()
+  '((ruby :variables ruby-version-manager 'rvm)))
